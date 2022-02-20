@@ -6,7 +6,7 @@ import "./topbar.css";
 
 export default function Topbar() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   return (
     <div className="topbarContainer">
@@ -37,10 +37,15 @@ export default function Topbar() {
           </div>
         </div>
         <div className="topbarIcons">
-          <div className="topbariconItem">
-            <Chat />
-            <span className="topbarIconBadge">1</span>
-          </div>
+          <Link
+            to="/messenger"
+            style={{ textDecoration: "none", color: "white" }}
+          >
+            <div className="topbariconItem">
+              <Chat />
+              <span className="topbarIconBadge">1</span>
+            </div>
+          </Link>
         </div>
         <div className="topbarIcons">
           <div className="topbariconItem">

@@ -21,8 +21,12 @@ export default function Post({ post }) {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get(`/users?userId=${post.userId}`);
-      setUser(res.data);
+      try {
+        const res = await axios.get(`/users?userId=${post.userId}`);
+        setUser(res.data);
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchUser();
   }, [post.userId]);
@@ -30,7 +34,9 @@ export default function Post({ post }) {
   const likeHandler = async () => {
     try {
       await axios.put(`/posts/${post._id}/like`, { userId: currentUser._id });
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
@@ -44,7 +50,7 @@ export default function Post({ post }) {
               <img
                 className="postProfileImg"
                 src={
-                  user.profilePicture
+                  user?.profilePicture
                     ? PF + user.profilePicture
                     : PF + "person/noAvatar.png"
                 }
@@ -60,7 +66,7 @@ export default function Post({ post }) {
         </div>
         <div className="postCenter">
           <span className="postText">{post?.desc}</span>
-          <img className="postImg" src={PF + post.img} alt="" />
+          <img className="postImg" src={post.img ? PF + post.img : ""} alt="" />
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">

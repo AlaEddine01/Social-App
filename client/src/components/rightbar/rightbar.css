@@ -68,6 +68,7 @@
   flex-direction: column;
   margin-bottom: 20px;
   cursor: pointer;
+  align-items: center;
 }
 
 .rightbarFollowingImg {

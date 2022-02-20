@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useRef } from "react";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import "./register.css";
 
 export default function Register() {
@@ -73,8 +74,9 @@ export default function Register() {
             <button type="submit" className="loginButton">
               Sign Up
             </button>
-
-            <button className="loginRegisterButton">Log In</button>
+            <Link to="/login" style={{ alignSelf: "center", width: "60%" }}>
+              <button className="loginRegisterButton">Log In</button>
+            </Link>
           </form>
         </div>
       </div>
