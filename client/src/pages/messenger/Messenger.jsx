@@ -5,6 +5,7 @@ import Message from "../../components/message/Message";
 import Topbar from "../../components/topbar/Topbar";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
+import { io } from "socket.io-client";
 import "./messenger.css";
 
 export default function Messenger() {
@@ -13,7 +14,18 @@ export default function Messenger() {
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState(null);
   const [newMessage, setNewMessage] = useState("");
+  const [socket, setSocket] = useState(null);
   const scrollRef = useRef();
+
+  useEffect(() => {
+    setSocket(io("ws://localhost:8900"));
+  }, []);
+
+  useEffect(() => {
+    socket?.on("welcome", (message) => {
+      console.log(message);
+    });
+  }, [socket]);
 
   useEffect(() => {
     const getConversations = async () => {
