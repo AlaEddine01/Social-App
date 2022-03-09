@@ -16,6 +16,14 @@ export default function Messenger() {
   const [newMessage, setNewMessage] = useState("");
   const [arrivedMessage, setArrivedMessage] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
+  const [friend, setFriend] = useState(null);
+  console.log(friend);
+  // console.log(conversations);
+  // console.log(currentChat);
+  // console.log(messages);
+  // console.log("newMessage: " + newMessage);
+  // console.log("arrivedMessage: " + arrivedMessage);
+  // console.log("onlineUsers: " + onlineUsers);
 
   const socket = useRef();
   const scrollRef = useRef();
@@ -69,6 +77,19 @@ export default function Messenger() {
     };
     getMessages();
   }, [currentChat]);
+
+  useEffect(() => {
+    const target = currentChat?.members.filter((m) => m !== user._id);
+    const getFriendDetails = async () => {
+      try {
+        const res = await axios.get(`/users/?userId=${target}`);
+        setFriend(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getFriendDetails();
+  }, [currentChat, user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -128,7 +149,12 @@ export default function Messenger() {
                 <div className="chatBoxTop">
                   {messages?.map((m, index) => (
                     <div ref={scrollRef} key={index}>
-                      <Message message={m} own={m.sender === user._id} />
+                      <Message
+                        message={m}
+                        currentUser={user}
+                        friend={friend}
+                        own={m.sender === user._id}
+                      />
                     </div>
                   ))}
                 </div>
