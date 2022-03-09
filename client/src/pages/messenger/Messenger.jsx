@@ -79,16 +79,18 @@ export default function Messenger() {
   }, [currentChat]);
 
   useEffect(() => {
-    const target = currentChat?.members.filter((m) => m !== user._id);
     const getFriendDetails = async () => {
       try {
+        const target = currentChat?.members.filter((m) => m !== user._id);
         const res = await axios.get(`/users/?userId=${target}`);
         setFriend(res.data);
       } catch (err) {
         console.log(err);
       }
     };
-    getFriendDetails();
+    if (currentChat !== null) {
+      getFriendDetails();
+    }
   }, [currentChat, user]);
 
   const handleSubmit = async (e) => {
