@@ -17,13 +17,6 @@ export default function Messenger() {
   const [arrivedMessage, setArrivedMessage] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [friend, setFriend] = useState(null);
-  console.log(friend);
-  // console.log(conversations);
-  // console.log(currentChat);
-  // console.log(messages);
-  // console.log("newMessage: " + newMessage);
-  // console.log("arrivedMessage: " + arrivedMessage);
-  // console.log("onlineUsers: " + onlineUsers);
 
   const socket = useRef();
   const scrollRef = useRef();

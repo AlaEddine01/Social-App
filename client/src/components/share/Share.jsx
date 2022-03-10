@@ -10,7 +10,7 @@ import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import "./share.css";
 
-export default function Share() {
+export default function Share({ reload, setReload }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user } = useContext(AuthContext);
 
@@ -46,8 +46,11 @@ export default function Share() {
     }
 
     try {
-      await axios.post("/posts", newPost);
-      window.location.reload();
+      await axios
+        .post("/posts", newPost)
+        .then(setReload(!reload))
+        .then((desc.current.value = ""))
+        .then(setFile(null));
     } catch (err) {
       console.log(err);
     }

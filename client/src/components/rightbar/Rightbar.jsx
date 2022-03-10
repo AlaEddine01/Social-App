@@ -14,7 +14,6 @@ export default function Rightbar({ user }) {
   const [followed, setFollowed] = useState(
     currentUser.followings.includes(user?._id)
   );
-
   useEffect(() => {
     setFollowed(currentUser.followings.includes(user?._id));
   }, [currentUser, user]);
@@ -37,17 +36,18 @@ export default function Rightbar({ user }) {
     try {
       // https://youtu.be/pFHyZvVxce0?list=PLj-4DlPRT48lXaz5YLvbLC38m25W9Kmqy&t=9824
       if (followed) {
-        await axios.put("/users/" + user._id + "/unfollow", {
-          userId: currentUser._id,
-        });
-        dispatch({ type: "UNFOLLOW" });
+        await axios
+          .put("/users/" + user._id + "/unfollow", {
+            userId: currentUser._id,
+          })
+          .then(dispatch({ type: "UNFOLLOW", payload: user._id }));
       } else {
-        await axios.put("/users/" + user._id + "/follow", {
-          userId: currentUser._id,
-        });
-        dispatch({ type: "FOLLOW" });
+        await axios
+          .put("/users/" + user._id + "/follow", {
+            userId: currentUser._id,
+          })
+          .then(dispatch({ type: "FOLLOW", payload: user._id }));
       }
-      setFollowed(!followed);
     } catch (err) {
       console.log(err);
     }

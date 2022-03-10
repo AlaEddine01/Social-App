@@ -66,7 +66,7 @@ router.get("/", async (req, res) => {
 
 // get friends
 // https://youtu.be/pFHyZvVxce0?list=PLj-4DlPRT48lXaz5YLvbLC38m25W9Kmqy&t=8844
-router.get("/friends/:userId",async (req, res) => {
+router.get("/friends/:userId", async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
     const friends = await Promise.all(
